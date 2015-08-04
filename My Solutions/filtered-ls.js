@@ -1,12 +1,14 @@
-var fs = require('fs')
-var path = require('path')
+var fs = require('fs');
+var path = require('path');
 
-fs.readdir(process.argv[2], function(err, list) {
+fs.readdir(process.argv[2], function(err, data) {
     if (err) throw err;
-    var filtered = list.filter(function (file) {
+
+    var filtered = data.filter(function (file) {
         if (path.extname(file) === '.' + process.argv[3]) {
-            return file
+            return file;
         }
     });
-    console.log(filtered.toString().replace(/,/g, '\n'))
+
+    console.log(filtered.toString().replace(/,/g, '\n'));
 });

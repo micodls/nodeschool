@@ -1,42 +1,41 @@
 var http = require('http');
 var url = require('url');
 
-var server = http.createServer(function (req, res) {
-
+var server = http.createServer(function (request, response) {
     function getISO(date)
     {
-        var new_date = new Date(date)
+        var myDate = new Date(date)
         return {
-            "hour": new_date.getHours(),
-            "minute": new_date.getMinutes(),
-            "second": new_date.getSeconds()
+            "hour": myDate.getHours(),
+            "minute": myDate.getMinutes(),
+            "second": myDate.getSeconds()
         };
-    }
+    };
 
     function getUnix(date)
     {
-        var new_date = new Date(date)
+        var myDate = new Date(date)
         return {
-            "unixtime": new_date.getTime()
+            "unixtime": myDate.getTime()
         };
-    }
+    };
 
-    var _url = url.parse(req.url, true);
-    var _date = _url.query.iso;
-    var _path = _url.pathname;
-    var _output = [];
+    var _url = url.parse(request.url, true);
+    var rawDate = _url.query.iso;
+    var path = _url.pathname;
+    var output = [];
 
-    if (_path == "/api/parsetime") {
-        _output.push(getISO(_date));
-    }
+    if (path == "/api/parsetime") {
+        output.push(getISO(rawDate));
+    };
 
-    if (_path == "/api/unixtime") {
-        _output.push( getUnix(_date));
-    }
+    if (path == "/api/unixtime") {
+        output.push( getUnix(rawDate));
+    };
 
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(_output[0]));
-    res.end(JSON.stringify(_output[1]));
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(output[0]));
+    response.end(JSON.stringify(output[1]));
 });
 
 server.listen(process.argv[2]);

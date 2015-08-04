@@ -1,6 +1,7 @@
-var mymodule = require('./my-module.js')
+var mymodule = require('./my-module.js');
 
-var list = mymodule(process.argv[2], process.argv[3], function(err, list) {
+mymodule(process.argv[2], process.argv[3], function(err, data) {
     if (err) throw err;
-    console.log(list.toString().replace(/,/g, '\n'))
+
+    console.log(data.toString().replace(/,/g, '\n'));
 });
