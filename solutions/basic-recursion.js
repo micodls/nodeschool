@@ -1,5 +1,5 @@
 function reduce(arr, fn, initial) {
-    if (arr.length == 0) {
+    if (arr.length === 0) {
         return initial;
     }
 
